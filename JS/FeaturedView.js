@@ -46,8 +46,6 @@ var FeaturedView = React.createClass({
 
     var dataLoaded = this.data.styles.length > 0;
 
-    console.log(this.data.styles[0]);
-
     return (
       <View style={styles.fullScreen}>
         {dataLoaded ?

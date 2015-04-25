@@ -16,7 +16,7 @@ var {
 
 var OutfitCard = React.createClass({
   propTypes: {
-    data: React.PropTypes.array.isRequired
+    data: React.PropTypes.object.isRequired
   },
 
   render: function () {
@@ -46,9 +46,9 @@ var OutfitCard = React.createClass({
           <Text style={styles.tags}>{this.props.data.category}</Text>
           <Text style={styles.instructions}>{this.props.data.subtitle}</Text>
           <Icon
-            name='ion|ios-heart-outline'
+            name='ion|heart'
             size={44}
-            color='#FF3A2D'
+            color='#DDD'
             style={{flex: 1, height: 44}}
           />
         </View>
