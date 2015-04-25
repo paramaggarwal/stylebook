@@ -15,18 +15,21 @@ var {
 } = React;
 
 var OutfitCard = React.createClass({
+  propTypes: {
+    data: React.PropTypes.array.isRequired
+  },
+
   render: function () {
     return (
       <View style={styles.feedCard}>
         <View style={{
-          flex: 1,
-          flexDirection: 'column'
+          flex: 1
         }}>
           <Image source={{
-            uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/image/style/properties/587216/Roadster-Men-Navy-Sutil-Solid-Shelby-Slim-Fit-Casual-Shirt_1_4bade0ed34f6e5ca0bbadbcd864badb0_mini.jpg'
+            uri: this.props.data.topwearImage
           }} style={styles.productImage} />
           <Image source={{
-            uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/images/style/properties/Roadster-Men-Light-Grey-Corvette-Slim-Fit-Jeans_d8ef5e352f2eaa6d45135ddf274950c6_images_mini.jpg'
+            uri: this.props.data.bottomwearImage
           }} style={styles.productImage} />
         </View>
         <View style={{
@@ -37,15 +40,11 @@ var OutfitCard = React.createClass({
           }}>
             <Image source={{
               uri: 'http://organicthemes.com/demo/profile/files/2012/12/profile_img.png'
-            }} style={{
-              borderRadius: 20,
-              height: 40,
-              width: 40
-            }} />
+            }} style={styles.userPicture} />
             </View>
-          <Text style={styles.welcome}>John Doe</Text>
-          <Text style={styles.tags}>Casual Wear</Text>
-          <Text style={styles.instructions}>Goes great on Monday mornings. The dark shade of the shirt contrasts really well with the light blue jeans.</Text>
+          <Text style={styles.welcome}>{this.props.data.createdBy}</Text>
+          <Text style={styles.tags}>{this.props.data.category}</Text>
+          <Text style={styles.instructions}>{this.props.data.subtitle}</Text>
           <Icon
             name='ion|ios-heart-outline'
             size={44}
@@ -68,7 +67,7 @@ var styles = StyleSheet.create({
     shadowColor: 'black',
     shadowRadius: 1,
     shadowOffset: {
-      h: 1
+      height: 1
     },
     shadowOpacity: 0.1
   },
@@ -96,6 +95,11 @@ var styles = StyleSheet.create({
     width: 120,
     height: 160
   },
+  userPicture: {
+    borderRadius: 20,
+    height: 40,
+    width: 40
+  }
 });
 
 module.exports = OutfitCard;

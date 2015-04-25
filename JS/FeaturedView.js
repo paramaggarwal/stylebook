@@ -15,6 +15,7 @@ var {
 } = React;
 
 var OutfitCard = require('./OutfitCard');
+var LoadingScreen = require('./LoadingScreen');
 
 var FeaturedView = React.createClass({
   mixins: [ParseReact.Mixin],
@@ -23,40 +24,59 @@ var FeaturedView = React.createClass({
     // Subscribe to all Comment objects, ordered by creation date
     // The results will be available at this.data.comments
     return {
+      user: ParseReact.currentUser,
       styles: (new Parse.Query('Styles')).ascending('createdAt')
     };
   },
 
   getInitialState: function () {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     return {
-      dataSource: ds.cloneWithRows(['row 1', 'row 2']),
+      templateDataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
     };
   },
 
   renderRow: function (rowData) {
     return (
-      <OutfitCard />
+      <OutfitCard data={rowData} />
     );
   },
 
   render: function() {
 
-    console.log(this.data);
-    
+    var dataLoaded = this.data.styles.length > 0;
+
+    console.log(this.data.styles[0]);
+
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        contentContainerStyle={styles.container}
-        automaticallyAdjustContentInsets={false}
-      />
+      <View style={styles.fullScreen}>
+        {dataLoaded ?
+          <ListView
+            dataSource={this.state.templateDataSource.cloneWithRows(this.data.styles)}
+            renderRow={this.renderRow}
+            contentContainerStyle={styles.container}
+            automaticallyAdjustContentInsets={false}
+          /> : <LoadingScreen />}
+        </View>
     );
   }
 });
 
-var styles = StyleSheet.create({  
+
+/*
+{dataLoaded ?
+          <ListView
+            dataSource={this.state.templateDataSource.cloneWithRows(this.data.styles)}
+            renderRow={this.renderRow}
+            contentContainerStyle={styles.container}
+            automaticallyAdjustContentInsets={false}
+          /> :*/
+
+var styles = StyleSheet.create({
+  fullScreen: {
+    flex: 1
+  },
+
   container: {
     paddingTop: 64,
     paddingBottom: 64,

@@ -31,7 +31,7 @@ var CreateView = require('./JS/CreateView');
 var Stylebook = React.createClass({
   getInitialState: function () {
     return {
-      selectedTab: 'create'
+      selectedTab: 'featured'
     }
   },
 
@@ -100,16 +100,9 @@ var Stylebook = React.createClass({
 });
 
 var styles = StyleSheet.create({
-  
   fullScreen: {
-    flex: 1
-  },
-  container: {
-    paddingTop: 64,
-    paddingBottom: 64,
-    backgroundColor: '#EEEEEE',
-  },
-  
+    flex: 1,
+  }
 });
 
 AppRegistry.registerComponent('Stylebook', () => Stylebook);
