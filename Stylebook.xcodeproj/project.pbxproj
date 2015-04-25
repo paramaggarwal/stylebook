@@ -25,6 +25,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8B0A7CBA1AEB9957004E7B11 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0A7CB91AEB9950004E7B11 /* libReactNativeIcons.a */; };
 		8B0A7CC11AEB9982004E7B11 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B0A7CBD1AEB9982004E7B11 /* ionicons.ttf */; };
+		8B0A7CC91AEBAF60004E7B11 /* libRCTAnimationExperimental.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0A7CC81AEBAF57004E7B11 /* libRCTAnimationExperimental.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,13 @@
 			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
 			remoteInfo = ReactNativeIcons;
 		};
+		8B0A7CC71AEBAF57004E7B11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8B0A7CC31AEBAF57004E7B11 /* RCTAnimationExperimental.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTAnimationExperimental;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +149,7 @@
 		8B0A7CBC1AEB9982004E7B11 /* foundation-icons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "foundation-icons.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/foundation-icons.ttf"; sourceTree = "<group>"; };
 		8B0A7CBD1AEB9982004E7B11 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ionicons.ttf; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/ionicons.ttf"; sourceTree = "<group>"; };
 		8B0A7CBE1AEB9982004E7B11 /* zocial-regular-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zocial-regular-webfont.ttf"; path = "node_modules/react-native-icons/ios/ReactNativeIcons/Libraries/FontAwesomeKit/zocial-regular-webfont.ttf"; sourceTree = "<group>"; };
+		8B0A7CC31AEBAF57004E7B11 /* RCTAnimationExperimental.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimationExperimental.xcodeproj; path = "node_modules/react-native/Libraries/Animation/RCTAnimationExperimental.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B0A7CC91AEBAF60004E7B11 /* libRCTAnimationExperimental.a in Frameworks */,
 				8B0A7CBA1AEB9957004E7B11 /* libReactNativeIcons.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00481BE81AC0C86700671115 /* libRCTWebSocketDebugger.a in Frameworks */,
@@ -278,6 +288,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				8B0A7CC31AEBAF57004E7B11 /* RCTAnimationExperimental.xcodeproj */,
 				8B0A7CAA1AEB9950004E7B11 /* ReactNativeIcons.xcodeproj */,
 				78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -330,6 +341,14 @@
 			isa = PBXGroup;
 			children = (
 				8B0A7CB91AEB9950004E7B11 /* libReactNativeIcons.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8B0A7CC41AEBAF57004E7B11 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8B0A7CC81AEBAF57004E7B11 /* libRCTAnimationExperimental.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -406,6 +425,10 @@
 				{
 					ProductGroup = 00C302B01ABCB8E700DB3ED1 /* Products */;
 					ProjectRef = 00C302AF1ABCB8E700DB3ED1 /* RCTAdSupport.xcodeproj */;
+				},
+				{
+					ProductGroup = 8B0A7CC41AEBAF57004E7B11 /* Products */;
+					ProjectRef = 8B0A7CC31AEBAF57004E7B11 /* RCTAnimationExperimental.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -528,6 +551,13 @@
 			fileType = archive.ar;
 			path = libReactNativeIcons.a;
 			remoteRef = 8B0A7CB81AEB9950004E7B11 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8B0A7CC81AEBAF57004E7B11 /* libRCTAnimationExperimental.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTAnimationExperimental.a;
+			remoteRef = 8B0A7CC71AEBAF57004E7B11 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

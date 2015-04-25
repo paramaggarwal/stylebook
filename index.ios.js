@@ -22,12 +22,14 @@ var {
 
 var SMXTabBarIOS = require('SMXTabBarIOS');
 var SMXTabBarItemIOS = SMXTabBarIOS.Item;
+
 var FeaturedView = require('./JS/FeaturedView');
+var CreateView = require('./JS/CreateView');
 
 var Stylebook = React.createClass({
   getInitialState: function () {
     return {
-      selectedTab: 'featured'
+      selectedTab: 'create'
     }
   },
 
@@ -65,8 +67,8 @@ var Stylebook = React.createClass({
           }}>
           <NavigatorIOS
             initialRoute={{
-              component: FeaturedView,
-              title: 'My View Title',
+              component: CreateView,
+              title: 'Create',
               passProps: { myProp: 'foo' },
             }}
             style={styles.fullScreen}
