@@ -9,6 +9,8 @@ var Parse = require('parse').Parse;
 var ParseReact = require('parse-react');
 var Icon = require('FAKIconImage');
 
+Parse.initialize("pQaxM3N7MRPr9L5vWnTP6haITXMrm3bu6w1Cnnop", "Dnbs6K9hpJnSe9HrQN7dR4DWnF9wZ4QIrxmK2E75");
+
 var {
   AppRegistry,
   StyleSheet,
@@ -87,7 +89,7 @@ var Stylebook = React.createClass({
           <NavigatorIOS
             initialRoute={{
               component: FeaturedView,
-              title: 'My View Title',
+              title: 'Liked',
               passProps: { myProp: 'foo' },
             }}
             style={styles.fullScreen}

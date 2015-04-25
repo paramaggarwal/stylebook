@@ -32,20 +32,21 @@ var FeaturedView = React.createClass({
       <Image source={{
         uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/image/style/properties/587216/Roadster-Men-Navy-Sutil-Solid-Shelby-Slim-Fit-Casual-Shirt_1_4bade0ed34f6e5ca0bbadbcd864badb0_mini.jpg'
       }} style={{
-        width: 120,
-        height: 160
-      }} />
+        width: 320,
+        height: 160,
+
+      }} resizeMode='contain' />
     );
   },
 
   renderBottomwearItem: function (rowData) {
     return (
       <Image source={{
-        uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/image/style/properties/587216/Roadster-Men-Navy-Sutil-Solid-Shelby-Slim-Fit-Casual-Shirt_1_4bade0ed34f6e5ca0bbadbcd864badb0_mini.jpg'
+        uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/images/style/properties/Roadster-Men-Light-Grey-Corvette-Slim-Fit-Jeans_d8ef5e352f2eaa6d45135ddf274950c6_images_mini.jpg'
       }} style={{
-        width: 120,
+        width: 320,
         height: 160
-      }} />
+      }} resizeMode='contain' />
     );
   },
 
@@ -54,6 +55,7 @@ var FeaturedView = React.createClass({
       <View style={{paddingTop: 64, paddingBottom: 64}}>
         <ListView
           style={{height: 160}}
+          pagingEnabled={true}
           horizontal={true}
           dataSource={this.state.dataSource}
           renderRow={this.renderTopwearItem}
@@ -61,12 +63,13 @@ var FeaturedView = React.createClass({
         />
         <ListView
           style={{height: 160}}
+          pagingEnabled={true}
           horizontal={true}
           dataSource={this.state.dataSource}
           renderRow={this.renderBottomwearItem}
           automaticallyAdjustContentInsets={false}
         />
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 100}}>
           <TouchableWithoutFeedback
             onPressIn={() => {this.setState({
               buttonHighlighted: true

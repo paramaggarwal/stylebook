@@ -17,6 +17,16 @@ var {
 var OutfitCard = require('./OutfitCard');
 
 var FeaturedView = React.createClass({
+  mixins: [ParseReact.Mixin],
+
+  observe: function() {
+    // Subscribe to all Comment objects, ordered by creation date
+    // The results will be available at this.data.comments
+    return {
+      styles: (new Parse.Query('Styles')).ascending('createdAt')
+    };
+  },
+
   getInitialState: function () {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
@@ -32,6 +42,9 @@ var FeaturedView = React.createClass({
   },
 
   render: function() {
+
+    console.log(this.data);
+    
     return (
       <ListView
         dataSource={this.state.dataSource}
