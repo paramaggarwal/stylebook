@@ -6,6 +6,8 @@
 
 # Some modules have their own node_modules with overlap
 .*/node_modules/node-haste/.*
+.*/node_modules/parse/.*
+.*/node_modules/parse-react/.*
 
 # Ignore react-tools where there are overlaps, but don't ignore anything that
 # react-native relies on
