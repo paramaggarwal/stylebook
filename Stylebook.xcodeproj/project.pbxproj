@@ -24,10 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8B0A7CBA1AEB9957004E7B11 /* libReactNativeIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B0A7CB91AEB9950004E7B11 /* libReactNativeIcons.a */; };
-		8B0A7CBF1AEB9982004E7B11 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8B0A7CBB1AEB9982004E7B11 /* FontAwesome.otf */; };
-		8B0A7CC01AEB9982004E7B11 /* foundation-icons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B0A7CBC1AEB9982004E7B11 /* foundation-icons.ttf */; };
 		8B0A7CC11AEB9982004E7B11 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B0A7CBD1AEB9982004E7B11 /* ionicons.ttf */; };
-		8B0A7CC21AEB9982004E7B11 /* zocial-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B0A7CBE1AEB9982004E7B11 /* zocial-regular-webfont.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -547,10 +544,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B0A7CBF1AEB9982004E7B11 /* FontAwesome.otf in Resources */,
-				8B0A7CC01AEB9982004E7B11 /* foundation-icons.ttf in Resources */,
 				8B0A7CC11AEB9982004E7B11 /* ionicons.ttf in Resources */,
-				8B0A7CC21AEB9982004E7B11 /* zocial-regular-webfont.ttf in Resources */,
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
