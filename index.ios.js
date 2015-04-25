@@ -31,7 +31,7 @@ var CreateView = require('./JS/CreateView');
 var Stylebook = React.createClass({
   getInitialState: function () {
     return {
-      selectedTab: 'featured'
+      selectedTab: 'create'
     }
   },
 

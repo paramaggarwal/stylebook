@@ -25,7 +25,7 @@ var FeaturedView = React.createClass({
     // The results will be available at this.data.comments
     return {
       user: ParseReact.currentUser,
-      styles: (new Parse.Query('Styles')).ascending('createdAt')
+      styles: (new Parse.Query('Styles')).descending('createdAt')
     };
   },
 

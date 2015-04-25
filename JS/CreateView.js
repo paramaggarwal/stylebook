@@ -15,59 +15,144 @@ var {
   TouchableWithoutFeedback
 } = React;
 
+var TOTAL_ITEMS = 10;
+var PADDING_HORIZONTAL = 80;
+
+var fetch = require('fetch');
 var OutfitCard = require('./OutfitCard');
+var GenderSelector = require('./GenderSelector');
 
 var FeaturedView = React.createClass({
   getInitialState: function () {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
     return {
-      dataSource: ds.cloneWithRows(['row 1','row 2' , 'row 2', 'row 2', 'row 2', 'row 2']),
-      buttonHighlighted: false
+      topResultsDataSource: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+      }),
+      bottomResultsDataSource: new ListView.DataSource({
+        rowHasChanged: (r1, r2) => r1 !== r2
+      }),
+      buttonHighlighted: false,
+
+      currentTopwearIndex: 0,
+      currentBottomwearIndex: 0,
+
     };
   },
 
-  renderTopwearItem: function (rowData) {
+  componentDidMount: function () {
+
+    var topQuery = 'shirt';
+    var bottomQuery = 'jeans';
+
+    fetch('http://developer.myntra.com/search/data/' + topQuery.replace(' ', '-')).then((data) => {
+      return data.json();
+    }).then((json) => {
+      this.setState({
+        topResultsDataSource: this.state.topResultsDataSource.cloneWithRows(json.data.results.products.slice(0, TOTAL_ITEMS))
+      });
+    });
+
+    fetch('http://developer.myntra.com/search/data/' + bottomQuery.replace(' ', '-')).then((data) => {
+      return data.json();
+    }).then((json) => {
+      this.setState({
+        bottomResultsDataSource: this.state.bottomResultsDataSource.cloneWithRows(json.data.results.products.slice(0, TOTAL_ITEMS))
+      });
+    });
+  },
+
+  renderTopwearItem: function (data) {
     return (
       <Image source={{
-        uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/image/style/properties/587216/Roadster-Men-Navy-Sutil-Solid-Shelby-Slim-Fit-Casual-Shirt_1_4bade0ed34f6e5ca0bbadbcd864badb0_mini.jpg'
+        uri: getImageURL(data)
       }} style={{
-        width: 320,
+        width: 120,
         height: 160,
-
-      }} resizeMode='contain' />
+        marginHorizontal: 20
+      }} />
     );
   },
 
-  renderBottomwearItem: function (rowData) {
+  renderBottomwearItem: function (data) {
     return (
       <Image source={{
-        uri: 'http://assets.myntassets.com/h_307,q_95,w_230/v1/images/style/properties/Roadster-Men-Light-Grey-Corvette-Slim-Fit-Jeans_d8ef5e352f2eaa6d45135ddf274950c6_images_mini.jpg'
+        uri: getImageURL(data)
       }} style={{
-        width: 320,
-        height: 160
-      }} resizeMode='contain' />
+        width: 120,
+        height: 160,
+        marginHorizontal: 20,
+      }} />
     );
+  },
+
+  calculateItemIndex: function (e) {
+    var boxWidth = e.nativeEvent.layoutMeasurement.width;
+    var itemWidth = 120 + (20*2);
+    var scrolled = e.nativeEvent.contentOffset.x;
+    var scrollSize = e.nativeEvent.contentSize.width - (PADDING_HORIZONTAL*2);
+
+    var percentComplete = scrolled/scrollSize;
+    var currentItemIndex = Math.round(percentComplete * TOTAL_ITEMS);
+
+    return currentItemIndex;
+  },
+
+  saveOutfit: function () {
+
+    var data = {
+      topwearID: this.state.currentTopwearID,
+      topwearImage: this.state.currentTopwearImage,
+      bottomwearID: this.state.currentBottomwearID,
+      bottomwearImage: this.state.currentBottomwearImage,
+      subtitle: "Goes great on weekends!",
+      category: 'Weekend Wear'
+    };
+
+    console.log(data);
+
+    ParseReact.Mutation.Create('Styles', data).dispatch();
   },
 
   render: function() {
     return (
       <View style={{paddingTop: 64, paddingBottom: 64}}>
+        {/*<GenderSelector onSelect={this.selectedGender}/>*/}
         <ListView
-          style={{height: 160}}
-          pagingEnabled={true}
+          style={{height: 160, paddingHorizontal: PADDING_HORIZONTAL}}
           horizontal={true}
-          dataSource={this.state.dataSource}
+          dataSource={this.state.topResultsDataSource}
           renderRow={this.renderTopwearItem}
           automaticallyAdjustContentInsets={false}
+          onScroll={(e) => {
+            var index = this.calculateItemIndex(e);
+            var itemData = this.state.topResultsDataSource.getRowData(0, index);
+
+            this.setState({
+              currentTopwearIndex: index,
+              currentTopwearID: itemData.styleid,
+              currentTopwearImage: getImageURL(itemData)
+            });
+          }}
+          scrollEventThrottle={100}
         />
         <ListView
-          style={{height: 160}}
-          pagingEnabled={true}
+          ref='bottomwear'
+          style={{height: 160, paddingHorizontal: PADDING_HORIZONTAL}}
           horizontal={true}
-          dataSource={this.state.dataSource}
+          dataSource={this.state.bottomResultsDataSource}
           renderRow={this.renderBottomwearItem}
           automaticallyAdjustContentInsets={false}
+          onScroll={(e) => {
+            var index = this.calculateItemIndex(e);
+            var itemData = this.state.bottomResultsDataSource.getRowData(0, index);
+
+            this.setState({
+              currentBottomwearIndex: index,
+              currentBottomwearID: itemData.styleid,
+              currentBottomwearImage: getImageURL(itemData)
+            });
+          }}
+          scrollEventThrottle={100}
         />
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 100}}>
           <TouchableWithoutFeedback
@@ -77,6 +162,7 @@ var FeaturedView = React.createClass({
             onPressOut={() => {this.setState({
               buttonHighlighted: false
             })}}
+            onPress={this.saveOutfit}
           >
             <Icon
             name={this.state.buttonHighlighted ? 'ion|ios-checkmark' : 'ion|ios-checkmark-outline'}
@@ -86,10 +172,27 @@ var FeaturedView = React.createClass({
           />
           </TouchableWithoutFeedback>
         </View>
+        <Text>{this.state.currentTopwearIndex}</Text>
+        <Text>{this.state.currentBottomwearIndex}</Text>
       </View>
     );
   }
 });
+
+function getImageURL (product) {
+
+  var imageURL = product.search_image;
+  var imageEntry = JSON.parse(product.imageEntry_default);
+  if (imageEntry && imageEntry.servingUploaderType === 'CL') {
+    imageURL = imageEntry.domain + 'w_180/' + imageEntry.relativePath;
+  } else if (imageEntry && imageEntry.servingUploaderType === 'S3') {
+    imageURL = imageEntry.domain + imageEntry.resolutionFormula.replace('($width)', '180').replace('($height)', '240');
+  }
+
+  console.log(imageURL);
+
+  return imageURL;
+};
 
 var styles = StyleSheet.create({  
   container: {
