@@ -51,6 +51,7 @@ var OutfitCard = React.createClass({
           <View style={{
             justifyContent: 'flex-end',
             marginHorizontal: 5,
+            width: 160
           }}>
             <Text style={styles.instructions}>{this.props.data.subtitle}</Text>
             <Text style={styles.welcome}>By {this.props.data.createdBy}</Text>

@@ -95,23 +95,38 @@ var FeaturedView = React.createClass({
     var percentComplete = scrolled/scrollSize;
     var currentItemIndex = Math.round(percentComplete * TOTAL_ITEMS);
 
+    console.log(currentItemIndex);
+
     return currentItemIndex;
   },
 
   saveOutfit: function () {
 
+    var topItemData = this.state.topResultsDataSource.getRowData(0, this.state.currentTopwearIndex);
+    var bottomItemData = this.state.bottomResultsDataSource.getRowData(0, this.state.currentBottomwearIndex);
+
     var data = {
-      topwearID: this.state.currentTopwearID,
-      topwearImage: this.state.currentTopwearImage,
-      bottomwearID: this.state.currentBottomwearID,
-      bottomwearImage: this.state.currentBottomwearImage,
+      topwearID: topItemData.styleid,
+      topwearImage: getImageURL(topItemData),
+
+      bottomwearID: bottomItemData.styleid,
+      bottomwearImage: getImageURL(bottomItemData),
+
       subtitle: this.state.outfitDescription,
-      createdBy: 'John Doe'
+      createdBy: 'Mahesh Jha'
     };
 
     console.log(data);
 
-    ParseReact.Mutation.Create('Styles', data).dispatch();
+    if (data.topwearID && data.bottomwearID) {
+      ParseReact.Mutation.Create('Styles', data).dispatch();
+      setTimeout(() => {
+        this.setState({
+          topQuery: null,
+          bottomQuery: null
+        });
+      }, 500)
+    };
   },
 
   render: function() {
@@ -123,6 +138,21 @@ var FeaturedView = React.createClass({
         keyboardShouldPersistTaps={true}
         automaticallyAdjustContentInsets={false}
       >
+        <TouchableWithoutFeedback
+          onPress={() => {
+            this.setState({
+              topQuery: null,
+              bottomQuery: null
+            });
+          }}
+        >
+          <Icon
+            name='ion|ios-refresh-empty'
+            size={32}
+            color='#CCC'
+            style={{alignSelf:'center', width: 32, height: 32}}
+          />
+        </TouchableWithoutFeedback>
         {/*<GenderSelector onSelect={this.selectedGender}/>*/}
         {this.state.topQuery ? <ListView
           key='toplist'
@@ -133,16 +163,12 @@ var FeaturedView = React.createClass({
           automaticallyAdjustContentInsets={false}
           onScroll={(e) => {
             var index = this.calculateItemIndex(e);
-            if (!index) {return};
-            var itemData = this.state.topResultsDataSource.getRowData(0, index);
-
-            this.setState({
-              currentTopwearIndex: index,
-              currentTopwearID: itemData.styleid,
-              currentTopwearImage: getImageURL(itemData)
-            });
+            if (index >= 0) {
+              this.setState({
+                currentTopwearIndex: index
+              });
+            };
           }}
-          scrollEventThrottle={100}
         /> : <View style={{height: ITEM_HEIGHT, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
           <TextInput
             ref='textInputTopwear'
@@ -177,23 +203,20 @@ var FeaturedView = React.createClass({
           automaticallyAdjustContentInsets={false}
           onScroll={(e) => {
             var index = this.calculateItemIndex(e);
-            if (!index) {return};
-            var itemData = this.state.bottomResultsDataSource.getRowData(0, index);
 
-            this.setState({
-              currentBottomwearIndex: index,
-              currentBottomwearID: itemData.styleid,
-              currentBottomwearImage: getImageURL(itemData)
-            });
+            if (index >= 0) {
+              this.setState({
+                currentBottomwearIndex: index
+              });
+            };
           }}
-          scrollEventThrottle={100}
         /> : <View style={{height: ITEM_HEIGHT, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
           <TextInput
             ref='textInputBottomwear'
             style={{alignSelf: 'center', width: 180, height: 30, margin: 5, borderColor: '#EEE', borderWidth: 1}}
             onChangeText={(text) => this.setState({bottomQueryInProgress: text})}
             placeholder="Search Bottomwear"
-            onFocus={() => this.refs.scrollingContainer.scrollTo(100, 0)}
+            onFocus={() => this.refs.scrollingContainer.scrollTo(140, 0)}
           />
           <TouchableWithoutFeedback
             onPress={() => {
@@ -212,12 +235,13 @@ var FeaturedView = React.createClass({
             />
           </TouchableWithoutFeedback>
           </View>}
-        <View style={{flex: 1, flexDirection: 'row', height: 50}}>
+        <View style={{flex: 1, flexDirection: 'row', height: 50, marginBottom: 80}}>
           <TextInput
+          ref='save'
             style={{flex: 1, margin: 5, borderColor: '#EEE', borderWidth: 1}}
             onChangeText={(text) => this.setState({outfitDescription: text})}
             placeholder="Description"
-            onFocus={() => this.refs.scrollingContainer.scrollTo(200, 0)}
+            onFocus={() => this.refs.scrollingContainer.scrollTo(240, 0)}
           />
           <TouchableWithoutFeedback
             onPressIn={() => {this.setState({
@@ -226,7 +250,11 @@ var FeaturedView = React.createClass({
             onPressOut={() => {this.setState({
               buttonHighlighted: false
             })}}
-            onPress={this.saveOutfit}
+            onPress={() => {
+              this.saveOutfit();
+              console.log(this.refs.save.blur());
+
+            }}
           >
             <Icon
               name={this.state.buttonHighlighted ? 'ion|ios-checkmark' : 'ion|ios-checkmark-outline'}

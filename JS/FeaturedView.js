@@ -11,7 +11,8 @@ var {
   Image,
   TabBarIOS,
   NavigatorIOS,
-  ListView
+  ListView,
+  TouchableWithoutFeedback
 } = React;
 
 var OutfitCard = require('./OutfitCard');
@@ -38,7 +39,25 @@ var FeaturedView = React.createClass({
 
   renderRow: function (rowData) {
     return (
-      <OutfitCard data={rowData} />
+      <OutfitCard key={rowData.topwearID} data={rowData} />
+    );
+  },
+
+  renderHeader: function () {
+    return (
+       <TouchableWithoutFeedback
+          onPress={() => {
+            console.log('refresh')
+            this.refreshQueries(['styles']);
+          }}
+        >
+          <Icon
+            name='ion|ios-refresh-empty'
+            size={32}
+            color='#CCC'
+            style={{alignSelf:'center', width: 32, height: 32}}
+          />
+        </TouchableWithoutFeedback>
     );
   },
 
@@ -51,6 +70,7 @@ var FeaturedView = React.createClass({
         {dataLoaded ?
           <ListView
             dataSource={this.state.templateDataSource.cloneWithRows(this.data.styles)}
+            renderHeader={this.renderHeader}
             renderRow={this.renderRow}
             contentContainerStyle={styles.container}
             automaticallyAdjustContentInsets={false}
@@ -59,16 +79,6 @@ var FeaturedView = React.createClass({
     );
   }
 });
-
-
-/*
-{dataLoaded ?
-          <ListView
-            dataSource={this.state.templateDataSource.cloneWithRows(this.data.styles)}
-            renderRow={this.renderRow}
-            contentContainerStyle={styles.container}
-            automaticallyAdjustContentInsets={false}
-          /> :*/
 
 var styles = StyleSheet.create({
   fullScreen: {
