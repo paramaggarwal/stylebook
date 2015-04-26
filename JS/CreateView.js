@@ -15,8 +15,11 @@ var {
   TouchableWithoutFeedback
 } = React;
 
-var TOTAL_ITEMS = 10;
-var PADDING_HORIZONTAL = 80;
+var TOTAL_ITEMS = 5;
+var PADDING_HORIZONTAL = 5;
+var ITEM_WIDTH = 300;
+var ITEM_HEIGHT = 200;
+var ITEM_MARGIN = 5;
 
 var fetch = require('fetch');
 var OutfitCard = require('./OutfitCard');
@@ -41,8 +44,8 @@ var FeaturedView = React.createClass({
 
   componentDidMount: function () {
 
-    var topQuery = 'shirt';
-    var bottomQuery = 'jeans';
+    var topQuery = 'women kurti';
+    var bottomQuery = 'women jeans';
 
     fetch('http://developer.myntra.com/search/data/' + topQuery.replace(' ', '-')).then((data) => {
       return data.json();
@@ -62,32 +65,38 @@ var FeaturedView = React.createClass({
   },
 
   renderTopwearItem: function (data) {
+
+    console.log('renderintopwear', data.styleid);
+
     return (
       <Image source={{
         uri: getImageURL(data)
       }} style={{
-        width: 120,
-        height: 160,
-        marginHorizontal: 20
+        width: ITEM_WIDTH,
+        height: ITEM_HEIGHT,
+        marginHorizontal: ITEM_MARGIN
       }} />
     );
   },
 
   renderBottomwearItem: function (data) {
+
+    console.log('renderinbottomwear', data.styleid);
+
     return (
       <Image source={{
         uri: getImageURL(data)
       }} style={{
-        width: 120,
-        height: 160,
-        marginHorizontal: 20,
+        width: ITEM_WIDTH,
+        height: ITEM_HEIGHT,
+        marginHorizontal: ITEM_MARGIN,
       }} />
     );
   },
 
   calculateItemIndex: function (e) {
     var boxWidth = e.nativeEvent.layoutMeasurement.width;
-    var itemWidth = 120 + (20*2);
+    var itemWidth = ITEM_WIDTH + (ITEM_MARGIN*2);
     var scrolled = e.nativeEvent.contentOffset.x;
     var scrollSize = e.nativeEvent.contentSize.width - (PADDING_HORIZONTAL*2);
 
@@ -105,7 +114,7 @@ var FeaturedView = React.createClass({
       bottomwearID: this.state.currentBottomwearID,
       bottomwearImage: this.state.currentBottomwearImage,
       subtitle: "Goes great on weekends!",
-      category: 'Weekend Wear'
+      createdBy: 'John Doe'
     };
 
     console.log(data);
@@ -118,7 +127,7 @@ var FeaturedView = React.createClass({
       <View style={{paddingTop: 64, paddingBottom: 64}}>
         {/*<GenderSelector onSelect={this.selectedGender}/>*/}
         <ListView
-          style={{height: 160, paddingHorizontal: PADDING_HORIZONTAL}}
+          style={{height: ITEM_HEIGHT, paddingHorizontal: PADDING_HORIZONTAL}}
           horizontal={true}
           dataSource={this.state.topResultsDataSource}
           renderRow={this.renderTopwearItem}
@@ -137,7 +146,7 @@ var FeaturedView = React.createClass({
         />
         <ListView
           ref='bottomwear'
-          style={{height: 160, paddingHorizontal: PADDING_HORIZONTAL}}
+          style={{height: ITEM_HEIGHT, paddingHorizontal: PADDING_HORIZONTAL}}
           horizontal={true}
           dataSource={this.state.bottomResultsDataSource}
           renderRow={this.renderBottomwearItem}
@@ -165,15 +174,13 @@ var FeaturedView = React.createClass({
             onPress={this.saveOutfit}
           >
             <Icon
-            name={this.state.buttonHighlighted ? 'ion|ios-checkmark' : 'ion|ios-checkmark-outline'}
-            size={44}
-            color='#FF3A2D'
-            style={{width: 44, height: 44}}
-          />
+              name={this.state.buttonHighlighted ? 'ion|ios-checkmark' : 'ion|ios-checkmark-outline'}
+              size={44}
+              color='#FF3A2D'
+              style={{width: 44, height: 44}}
+            />
           </TouchableWithoutFeedback>
         </View>
-        <Text>{this.state.currentTopwearIndex}</Text>
-        <Text>{this.state.currentBottomwearIndex}</Text>
       </View>
     );
   }
@@ -184,12 +191,10 @@ function getImageURL (product) {
   var imageURL = product.search_image;
   var imageEntry = JSON.parse(product.imageEntry_default);
   if (imageEntry && imageEntry.servingUploaderType === 'CL') {
-    imageURL = imageEntry.domain + 'w_180/' + imageEntry.relativePath;
+    imageURL = imageEntry.domain + 'w_360/' + imageEntry.relativePath;
   } else if (imageEntry && imageEntry.servingUploaderType === 'S3') {
-    imageURL = imageEntry.domain + imageEntry.resolutionFormula.replace('($width)', '180').replace('($height)', '240');
+    imageURL = imageEntry.domain + imageEntry.resolutionFormula.replace('($width)', '360').replace('($height)', '480');
   }
-
-  console.log(imageURL);
 
   return imageURL;
 };

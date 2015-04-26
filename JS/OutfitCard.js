@@ -22,18 +22,24 @@ var OutfitCard = React.createClass({
   render: function () {
     return (
       <View style={styles.feedCard}>
-        <View style={{
-          flex: 1
-        }}>
-          <Image source={{
+        <Image
+          source={{
             uri: this.props.data.topwearImage
-          }} style={styles.productImage} />
-          <Image source={{
+          }}
+          style={styles.productImage}
+          resizeMode='cover' />
+
+        <Image
+          source={{
             uri: this.props.data.bottomwearImage
-          }} style={styles.productImage} />
-        </View>
+          }}
+          style={styles.productImage}
+          resizeMode='cover' />
+
         <View style={{
-          flex: 1,
+          flexDirection: 'row',
+          backgroundColor: 'white',
+          padding: 5
         }}>
           <View style={{
             alignItems: 'center'
@@ -41,16 +47,21 @@ var OutfitCard = React.createClass({
             <Image source={{
               uri: 'http://organicthemes.com/demo/profile/files/2012/12/profile_img.png'
             }} style={styles.userPicture} />
-            </View>
-          <Text style={styles.welcome}>{this.props.data.createdBy}</Text>
-          <Text style={styles.tags}>{this.props.data.category}</Text>
-          <Text style={styles.instructions}>{this.props.data.subtitle}</Text>
+          </View>
+          <View style={{
+            justifyContent: 'flex-end',
+            marginHorizontal: 5,
+          }}>
+            <Text style={styles.instructions}>{this.props.data.subtitle}</Text>
+            <Text style={styles.welcome}>By {this.props.data.createdBy}</Text>
+          </View>
           <Icon
             name='ion|heart'
-            size={44}
+            size={32}
             color='#DDD'
-            style={{flex: 1, height: 44}}
+            style={{flex: 1, height: 32}}
           />
+          
         </View>
       </View>
     );
@@ -59,11 +70,10 @@ var OutfitCard = React.createClass({
 
 var styles = StyleSheet.create({
   feedCard: {
-    flexDirection: 'row',
-    margin: 10,
-    padding: 20,
-    borderRadius: 5,
-    backgroundColor: 'white',
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 10,
+    overflow: 'hidden',
     shadowColor: 'black',
     shadowRadius: 1,
     shadowOffset: {
@@ -72,28 +82,15 @@ var styles = StyleSheet.create({
     shadowOpacity: 0.1
   },
   welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    
-  },
-  tags: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    // marginTop: 5,
-    marginBottom: 20
+    fontSize: 12,
   },
   instructions: {
-    fontSize: 13,
-    textAlign: 'center',
+    fontSize: 14,
     color: '#333333',
-    marginBottom: 5,
-    height: 120
   },
   productImage: {
-    width: 120,
-    height: 160
+    width: 300,
+    height: 200
   },
   userPicture: {
     borderRadius: 20,
