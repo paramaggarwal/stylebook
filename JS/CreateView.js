@@ -64,7 +64,9 @@ var FeaturedView = React.createClass({
 
   renderTopwearItem: function (data) {
     return (
-      <Image source={{
+      <Image 
+        key={data.styleid}
+        source={{
         uri: getImageURL(data)
       }} style={{
         width: ITEM_WIDTH,
@@ -76,7 +78,9 @@ var FeaturedView = React.createClass({
 
   renderBottomwearItem: function (data) {
     return (
-      <Image source={{
+      <Image
+        key={data.styleid}
+        source={{
         uri: getImageURL(data)
       }} style={{
         width: ITEM_WIDTH,
