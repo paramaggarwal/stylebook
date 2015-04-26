@@ -33,7 +33,7 @@ var OutfitCard = React.createClass({
           source={{
             uri: this.props.data.bottomwearImage
           }}
-          style={styles.productImage}
+          style={[styles.productImage, {marginTop: 2}]}
           resizeMode='cover' />
 
         <View style={{
@@ -61,7 +61,12 @@ var OutfitCard = React.createClass({
             color='#DDD'
             style={{flex: 1, height: 32}}
           />
-          
+          <Icon
+            name='ion|bag'
+            size={32}
+            color='#DDD'
+            style={{flex: 1, height: 32}}
+          />
         </View>
       </View>
     );
@@ -74,6 +79,7 @@ var styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
     overflow: 'hidden',
+    backgroundColor: 'white',
     shadowColor: 'black',
     shadowRadius: 1,
     shadowOffset: {

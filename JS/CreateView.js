@@ -12,7 +12,9 @@ var {
   TabBarIOS,
   NavigatorIOS,
   ListView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  TextInput,
+  ScrollView
 } = React;
 
 var TOTAL_ITEMS = 5;
@@ -113,7 +115,7 @@ var FeaturedView = React.createClass({
       topwearImage: this.state.currentTopwearImage,
       bottomwearID: this.state.currentBottomwearID,
       bottomwearImage: this.state.currentBottomwearImage,
-      subtitle: "Goes great on weekends!",
+      subtitle: this.state.outfitDescription,
       createdBy: 'John Doe'
     };
 
@@ -124,7 +126,13 @@ var FeaturedView = React.createClass({
 
   render: function() {
     return (
-      <View style={{paddingTop: 64, paddingBottom: 64}}>
+      <ScrollView
+        ref='scrollingContainer'
+        style={{paddingTop: 64, paddingBottom: 64}}
+        keyboardDismissMode="onDrag"
+        keyboardShouldPersistTaps={true}
+        automaticallyAdjustContentInsets={false}
+      >
         {/*<GenderSelector onSelect={this.selectedGender}/>*/}
         <ListView
           style={{height: ITEM_HEIGHT, paddingHorizontal: PADDING_HORIZONTAL}}
@@ -163,7 +171,13 @@ var FeaturedView = React.createClass({
           }}
           scrollEventThrottle={100}
         />
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', height: 100}}>
+        <View style={{flex: 1, flexDirection: 'row', height: 50}}>
+          <TextInput
+            style={{flex: 1, margin: 5, borderColor: '#EEE', borderWidth: 1}}
+            onChangeText={(text) => this.setState({outfitDescription: text})}
+            placeholder="Description"
+            onFocus={() => this.refs.scrollingContainer.scrollTo(200, 0)}
+          />
           <TouchableWithoutFeedback
             onPressIn={() => {this.setState({
               buttonHighlighted: true
@@ -181,7 +195,7 @@ var FeaturedView = React.createClass({
             />
           </TouchableWithoutFeedback>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 });
