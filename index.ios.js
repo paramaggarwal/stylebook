@@ -76,7 +76,7 @@ var Stylebook = React.createClass({
             style={styles.fullScreen}
           />
         </SMXTabBarItemIOS>
-        <SMXTabBarItemIOS
+        {/*<SMXTabBarItemIOS
           iconName={'ion|heart'}
           title={'Liked'}
           iconSize={32}
@@ -94,7 +94,7 @@ var Stylebook = React.createClass({
             }}
             style={styles.fullScreen}
           />
-        </SMXTabBarItemIOS>
+        </SMXTabBarItemIOS>*/}
       </SMXTabBarIOS>);
   }
 });

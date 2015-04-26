@@ -44,32 +44,25 @@ var FeaturedView = React.createClass({
     };
   },
 
-  componentDidMount: function () {
+  query: function (query, prefix) {
 
-    var topQuery = 'women kurti';
-    var bottomQuery = 'women jeans';
+    if (!query) {return};
 
-    fetch('http://developer.myntra.com/search/data/' + topQuery.replace(' ', '-')).then((data) => {
+    fetch('http://developer.myntra.com/search/data/' + query.replace(' ', '-')).then((data) => {
       return data.json();
     }).then((json) => {
-      this.setState({
-        topResultsDataSource: this.state.topResultsDataSource.cloneWithRows(json.data.results.products.slice(0, TOTAL_ITEMS))
-      });
-    });
-
-    fetch('http://developer.myntra.com/search/data/' + bottomQuery.replace(' ', '-')).then((data) => {
-      return data.json();
-    }).then((json) => {
-      this.setState({
-        bottomResultsDataSource: this.state.bottomResultsDataSource.cloneWithRows(json.data.results.products.slice(0, TOTAL_ITEMS))
-      });
+      var obj = {};
+      obj[prefix + 'ResultsDataSource'] = this.state[prefix + 'ResultsDataSource'].cloneWithRows(json.data.results.products.slice(0, TOTAL_ITEMS));
+      this.setState(obj);
     });
   },
 
+  // componentDidMount: function () {
+  //   query(this.state.topQuery || 'shirts', 'top');
+  //   query(this.state.bottomQuery || 'shirts', 'bottom');
+  // },
+
   renderTopwearItem: function (data) {
-
-    console.log('renderintopwear', data.styleid);
-
     return (
       <Image source={{
         uri: getImageURL(data)
@@ -82,9 +75,6 @@ var FeaturedView = React.createClass({
   },
 
   renderBottomwearItem: function (data) {
-
-    console.log('renderinbottomwear', data.styleid);
-
     return (
       <Image source={{
         uri: getImageURL(data)
@@ -134,7 +124,8 @@ var FeaturedView = React.createClass({
         automaticallyAdjustContentInsets={false}
       >
         {/*<GenderSelector onSelect={this.selectedGender}/>*/}
-        <ListView
+        {this.state.topQuery ? <ListView
+          key='toplist'
           style={{height: ITEM_HEIGHT, paddingHorizontal: PADDING_HORIZONTAL}}
           horizontal={true}
           dataSource={this.state.topResultsDataSource}
@@ -142,6 +133,7 @@ var FeaturedView = React.createClass({
           automaticallyAdjustContentInsets={false}
           onScroll={(e) => {
             var index = this.calculateItemIndex(e);
+            if (!index) {return};
             var itemData = this.state.topResultsDataSource.getRowData(0, index);
 
             this.setState({
@@ -151,9 +143,33 @@ var FeaturedView = React.createClass({
             });
           }}
           scrollEventThrottle={100}
-        />
-        <ListView
-          ref='bottomwear'
+        /> : <View style={{height: ITEM_HEIGHT, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+          <TextInput
+            ref='textInputTopwear'
+            style={{alignSelf: 'center', width: 180, height: 30, margin: 5, borderColor: '#EEE', borderWidth: 1}}
+            onChangeText={(text) => this.setState({topQueryInProgress: text})}
+            placeholder="Search Topwear"
+          />
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.query(this.state.topQueryInProgress, 'top');
+              console.log(this.refs.textInputTopwear.blur());
+              this.setState({
+                topQuery: this.state.topQueryInProgress
+              });
+
+            }}
+          >
+            <Icon
+              name='ion|ios-search'
+              size={32}
+              color='#3A2DFF'
+              style={{width: 32, height: 32}}
+            />
+          </TouchableWithoutFeedback>
+          </View>}
+        {this.state.bottomQuery ? <ListView
+          key='bottomlist'
           style={{height: ITEM_HEIGHT, paddingHorizontal: PADDING_HORIZONTAL}}
           horizontal={true}
           dataSource={this.state.bottomResultsDataSource}
@@ -161,6 +177,7 @@ var FeaturedView = React.createClass({
           automaticallyAdjustContentInsets={false}
           onScroll={(e) => {
             var index = this.calculateItemIndex(e);
+            if (!index) {return};
             var itemData = this.state.bottomResultsDataSource.getRowData(0, index);
 
             this.setState({
@@ -170,7 +187,31 @@ var FeaturedView = React.createClass({
             });
           }}
           scrollEventThrottle={100}
-        />
+        /> : <View style={{height: ITEM_HEIGHT, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
+          <TextInput
+            ref='textInputBottomwear'
+            style={{alignSelf: 'center', width: 180, height: 30, margin: 5, borderColor: '#EEE', borderWidth: 1}}
+            onChangeText={(text) => this.setState({bottomQueryInProgress: text})}
+            placeholder="Search Bottomwear"
+            onFocus={() => this.refs.scrollingContainer.scrollTo(100, 0)}
+          />
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.query(this.state.bottomQueryInProgress, 'bottom');
+              console.log(this.refs.textInputBottomwear.blur());
+              this.setState({
+                bottomQuery: this.state.bottomQueryInProgress
+              })
+            }}
+          >
+            <Icon
+              name='ion|ios-search'
+              size={32}
+              color='#3A2DFF'
+              style={{width: 32, height: 32}}
+            />
+          </TouchableWithoutFeedback>
+          </View>}
         <View style={{flex: 1, flexDirection: 'row', height: 50}}>
           <TextInput
             style={{flex: 1, margin: 5, borderColor: '#EEE', borderWidth: 1}}
@@ -190,7 +231,7 @@ var FeaturedView = React.createClass({
             <Icon
               name={this.state.buttonHighlighted ? 'ion|ios-checkmark' : 'ion|ios-checkmark-outline'}
               size={44}
-              color='#FF3A2D'
+              color='#3A2DFF'
               style={{width: 44, height: 44}}
             />
           </TouchableWithoutFeedback>
