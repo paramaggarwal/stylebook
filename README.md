@@ -10,11 +10,11 @@ There is a video of the app in action here: http://youtu.be/yNKhI3eXu0k
 
 # Screenshots
 
-![Screen 1](https://raw.githubusercontent.com/paramaggarwal/stylebook/master/IMG_0905_small.PNG)
+![Screen 1](https://raw.githubusercontent.com/paramaggarwal/stylebook/master/Screenshots/IMG_0905_small.PNG)
 
-![Screen 2](https://raw.githubusercontent.com/paramaggarwal/stylebook/master/IMG_0906_small.PNG)
+![Screen 2](https://raw.githubusercontent.com/paramaggarwal/stylebook/master/Screenshots/IMG_0906_small.PNG)
 
-![Screen 3](https://raw.githubusercontent.com/paramaggarwal/stylebook/master/IMG_0907_small.PNG)
+![Screen 3](https://raw.githubusercontent.com/paramaggarwal/stylebook/master/Screenshots/IMG_0907_small.PNG)
 
 # Tech
 
