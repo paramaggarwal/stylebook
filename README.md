@@ -6,7 +6,7 @@ Built at the Myntra Hackathon - 25th April 2015, Bangalore.
 
 # Demo
 
-There is a video of the app in action here: http://youtu.be/yNKhI3eXu0k
+There is a video of the app in action here: https://vimeo.com/129634730
 
 # Screenshots
 
